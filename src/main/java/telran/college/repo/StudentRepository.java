@@ -13,7 +13,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 @Query("delete from StudentEntity s where s.id not in"
 		+ " (select m.student.id from MarkEntity m group by m.student.id having avg(m.mark) >= :avgMark) ")
 	void deleteStudentsAvgMarkLess(double avgMark);
-
+	 /*************************************/
 @Query("select s from StudentEntity s where s.id in"
 		+ " (select ms.id from MarkEntity m right join m.student ms group by ms.id having count(m.mark) < :countMin) ")
 	List<StudentEntity> getStudentsCountLess(long countMin);

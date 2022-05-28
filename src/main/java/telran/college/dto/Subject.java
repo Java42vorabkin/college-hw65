@@ -26,4 +26,8 @@ public boolean equals(Object obj) {
 	Subject other = (Subject) obj;
 	return id == other.id && Objects.equals(subjectName, other.subjectName);
 }
+@Override
+public String toString() {
+	return "Subject [id=" + id + ", subjectName=" + subjectName + "]";
+}
 }

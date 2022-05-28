@@ -90,7 +90,40 @@ class StudentsSubjectsMarksJpaApplicationTests {
 		List<Student> actual = collegeService.getStudentsAllMarksSubject(75, "subject1");
 		assertIterableEquals(expected, actual);
 	}
-	
-	
-
+	@Test
+	@Order(8)
+	void bestStudentsSubjects () {
+		// V.R.
+		List<Student> expected = Arrays.asList(new Student(1, "student1"),new Student(2, "student2") );
+		List<Student> actual = collegeService.bestStudentsSubject(2,"subject1");
+		System.out.println("bestStudentsSubjects:  " + actual);
+		assertIterableEquals(expected, actual);
+	}
+	@Test
+	@Order (9)
+	void subjectWithGreatestAvgMark() {
+		// V.R.
+		Subject expected = new Subject(1,  "subject1");
+		Subject actual = collegeService.subjectGreatestAvgMark();
+		System.out.println("subjectWithGreatestAvgMark: " + actual);
+		assertEquals(expected, actual);
+	}
+	@Test
+	@Order (9)
+	void studentsMaxMarks() {
+		// V.R.
+		List<Student> expected = Arrays.asList(new Student(1, "student1"));
+		List<Student> actual = collegeService.getStudentsMaxMarksCount();
+		System.out.println("studentsMaxMarks: " + actual);
+		assertIterableEquals(expected, actual);
+	}
+	@Test
+	@Order (9)
+	void subjectsAvgMarkLessTest () {
+		// V.R.
+		List<Subject> expected = Arrays.asList(new Subject(1, "subject1"),new Subject(2, "subject2"), new Subject(3, "subject3"));
+		List<Subject> actual = collegeService.getSubjectsAvgMarkLess(80);
+		System.out.println("subjectsAvgMarkLessTest:  " + actual);
+		assertIterableEquals(expected, actual);		
+	}
 }

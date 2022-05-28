@@ -37,4 +37,24 @@ List<IdNameProj> findBestStudents(long nStudents);
  		+ "not exists (select mark from MarkEntity where m.student.id = student.id"
  		+ " and m.subject.id = subject.id and mark < :mark)")
  List<IdNameProj> findStudentsAllMarksGreaterEqual(int mark, String subject);
+ /***************************************************************************/
+ @Query(value="select s.id as id, s.name as name from marks m join students s  "
+		 + "on m.student_id=s.id join subjects sb on m.subject_id = sb.id   "
+		 + "where sb.subject_name = :subjectName group by id, name   "
+		 + " order by avg(m.mark) desc limit :nStudents", nativeQuery = true)	 		
+List<IdNameProj> findBestStudentsSubject(long nStudents, String subjectName);
+ 
+ /***********************************************************************************/
+@Query(value="select sb.id as id, sb.subject_name as name from marks m  "
+		+ "join subjects sb on m.subject_id = sb.id "
+		+ "group by id, name order by avg(m.mark) desc limit 1", nativeQuery=true)
+ IdNameProj findSubjectWithGreatestAvgMark();
+/***********************************************************************************/
+@Query(value="select s.id as id, s.name as name from marks m join students s "
+		+ "on m.student_id=s.id group by id, name having count(m.mark) ="
+		+ " (select max(count) from"
+		+ " (select s1.id, count(m1.mark) as count from marks m1 join students s1 "
+		+ "on m1.student_id=s1.id group by s1.id))",
+nativeQuery=true)
+List<IdNameProj> findStudentsMaxMarks();
 }
